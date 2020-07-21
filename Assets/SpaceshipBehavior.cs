@@ -18,20 +18,28 @@ public class SpaceshipBehavior : MonoBehaviour
         float yAxis = Input.GetAxis("Vertical");
         float xAxis = Input.GetAxis("Horizontal");
 
-        ThrustUp(yAxis);
-        ThrustSide(xAxis);
+        if (Input.GetKey(KeyCode.D))
+            ThrustRight();
+        if (Input.GetKey(KeyCode.A))
+            ThrustLeft();
     }
 
-    private void ThrustUp(float amount)
+    private void ThrustRight()
     {
-        Vector2 force = (transform.up * amount * 30);
-        rb.AddForce(force);
+        Vector2 force = (transform.up * 100);
+        Vector2 m_NewPosition = new Vector2(-0.01f, 0.0f);
+        Vector2 objectPosition = new Vector2(transform.position.x, transform.position.y);
+
+        rb.AddForceAtPosition(force, objectPosition + m_NewPosition);
     }
 
-    private void ThrustSide(float amount)
+    private void ThrustLeft()
     {
-        Vector2 force = (transform.right * amount * 30);
-        rb.AddForce(force);
+        Vector2 force = (transform.up * 100);
+        Vector2 m_NewPosition = new Vector2(0.01f, 0.0f);
+        Vector2 objectPosition = new Vector2(transform.position.x, transform.position.y);
+
+        rb.AddForceAtPosition(force, objectPosition + m_NewPosition);
     }
 
 
