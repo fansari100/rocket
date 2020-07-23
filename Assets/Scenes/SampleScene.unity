@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1546371952}
+  torque: 0
 --- !u!50 &1546371952
 Rigidbody2D:
   serializedVersion: 4

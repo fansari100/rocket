@@ -5,6 +5,9 @@ using UnityEngine;
 public class SpaceshipBehavior : MonoBehaviour
 {
     public Rigidbody2D rb;
+    Vector2 objectPos;
+    Vector3 objectDir;
+    public float torque;
 
     // Start is called before the first frame update
     void Start()
@@ -15,32 +18,35 @@ public class SpaceshipBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        objectPos = new Vector2(transform.position.x, transform.position.y);
+        objectDir = Quaternion.AngleAxis(transform.rotation.eulerAngles.z, Vector3.forward) * Vector3.right;
+
         float yAxis = Input.GetAxis("Vertical");
         float xAxis = Input.GetAxis("Horizontal");
 
+        Vector2 force = (transform.up * 100);
+
         if (Input.GetKey(KeyCode.D))
+        {
+            rb.AddForce(force);
             ThrustRight();
+        }
         if (Input.GetKey(KeyCode.A))
+        {
+            rb.AddForce(force);
             ThrustLeft();
+        }
+
+        print(transform.rotation.eulerAngles.z);
     }
 
     private void ThrustRight()
     {
-        Vector2 force = (transform.up * 100);
-        Vector2 m_NewPosition = new Vector2(-0.01f, 0.0f);
-        Vector2 objectPosition = new Vector2(transform.position.x, transform.position.y);
-
-        rb.AddForceAtPosition(force, objectPosition + m_NewPosition);
+        rb.AddTorque(-1);
     }
 
     private void ThrustLeft()
     {
-        Vector2 force = (transform.up * 100);
-        Vector2 m_NewPosition = new Vector2(0.01f, 0.0f);
-        Vector2 objectPosition = new Vector2(transform.position.x, transform.position.y);
-
-        rb.AddForceAtPosition(force, objectPosition + m_NewPosition);
+        rb.AddTorque(1);
     }
-
-
 }
