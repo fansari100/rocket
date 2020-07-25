@@ -1,3 +1,3 @@
 # thruster
 
-dab on the memers
+dab on the joes
