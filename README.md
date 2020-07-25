@@ -1,3 +1,3 @@
 # thruster
 
-dab on the haters
+dab on the memers
