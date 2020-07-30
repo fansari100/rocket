@@ -5,14 +5,19 @@ using UnityEngine;
 public class SpaceshipBehavior : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public ParticleSystem exhaustRight;
+    public ParticleSystem exhaustLeft;
+
     Vector2 objectPos;
     Vector3 objectDir;
-    public float torque;
+    float torque;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        // exhaustRight = GetComponent<ParticleSystem>();
+        // exhaustLeft = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -30,14 +35,14 @@ public class SpaceshipBehavior : MonoBehaviour
         {
             rb.AddForce(force);
             ThrustRight();
+            exhaustLeft.Emit(1);
         }
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(force);
             ThrustLeft();
+            exhaustRight.Emit(1);
         }
-
-        print(transform.rotation.eulerAngles.z);
     }
 
     private void ThrustRight()
