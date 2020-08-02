@@ -5085,6 +5085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4fe72411c8c5c41821c0f0586e3ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  THRUSTER_FORCE: 100
   rb: {fileID: 1546371952}
   exhaustRight: {fileID: 1740717057}
   exhaustLeft: {fileID: 1405182768}

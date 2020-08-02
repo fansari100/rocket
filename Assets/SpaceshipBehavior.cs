@@ -1,57 +1,58 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceshipBehavior : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public ParticleSystem exhaustRight;
-    public ParticleSystem exhaustLeft;
-
+    [SerializeField] private int THRUSTER_FORCE = 100;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private ParticleSystem exhaustRight;
+    [SerializeField] private ParticleSystem exhaustLeft;
+    private Dictionary<float, ParticleSystem> thrusters;
+    /*
     Vector2 objectPos;
     Vector3 objectDir;
     float torque;
-
-    // Start is called before the first frame update
+    */
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        // exhaustRight = GetComponent<ParticleSystem>();
-        // exhaustLeft = GetComponent<ParticleSystem>();
+        thrusters = new Dictionary<float, ParticleSystem>();
+        thrusters.Add(-1f, exhaustLeft);
+        thrusters.Add(1f, exhaustRight);
     }
-
-    // Update is called once per frame
     void Update()
     {
+        /*
         objectPos = new Vector2(transform.position.x, transform.position.y);
         objectDir = Quaternion.AngleAxis(transform.rotation.eulerAngles.z, Vector3.forward) * Vector3.right;
-
         float yAxis = Input.GetAxis("Vertical");
         float xAxis = Input.GetAxis("Horizontal");
-
-        Vector2 force = (transform.up * 100);
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(force);
-            ThrustRight();
-            exhaustLeft.Emit(1);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(force);
-            ThrustLeft();
-            exhaustRight.Emit(1);
-        }
+        */
+        #if UNITY_IOS
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.position.x < Screen.width / 2)
+                {
+                    Thrust(-1f);
+                }
+                else
+                {
+                    Thrust(1f);
+                }
+            }
+        #else
+            Thrust(Input.GetAxisRaw("Horizontal") * -1);
+        #endif
     }
 
-    private void ThrustRight()
+    private void Thrust(float direction)
     {
-        rb.AddTorque(-1);
-    }
-
-    private void ThrustLeft()
-    {
-        rb.AddTorque(1);
+        if (direction != 0f)
+        {
+            Vector2 force = (transform.up * THRUSTER_FORCE);
+            rb.AddForce(force);
+            rb.AddTorque(direction);
+            thrusters[direction].Emit(1);
+        }
     }
 }
