@@ -8,6 +8,7 @@ public class SpaceshipBehavior : MonoBehaviour
     [SerializeField] private ParticleSystem exhaustRight;
     [SerializeField] private ParticleSystem exhaustLeft;
     private Dictionary<float, ParticleSystem> thrusters;
+    private int HALF_WIDTH = Screen.width / 2;
     /*
     Vector2 objectPos;
     Vector3 objectDir;
@@ -15,9 +16,7 @@ public class SpaceshipBehavior : MonoBehaviour
     */
     void Start()
     {
-        thrusters = new Dictionary<float, ParticleSystem>();
-        thrusters.Add(-1f, exhaustLeft);
-        thrusters.Add(1f, exhaustRight);
+        LoadThrusters();
     }
     void Update()
     {
@@ -30,19 +29,28 @@ public class SpaceshipBehavior : MonoBehaviour
         #if UNITY_IOS
             if (Input.touchCount > 0)
             {
-                Touch touch = Input.GetTouch(0);
-                if (touch.position.x < Screen.width / 2)
+                foreach (Touch touch in Input.touches)
                 {
-                    Thrust(-1f);
-                }
-                else
-                {
-                    Thrust(1f);
+                    if (touch.position.x < HALF_WIDTH)
+                    {
+                        Thrust(-1f);
+                    }
+                    else
+                    {
+                        Thrust(1f);
+                    }
                 }
             }
         #else
             Thrust(Input.GetAxisRaw("Horizontal") * -1);
         #endif
+    }
+
+    private void LoadThrusters()
+    {
+        thrusters = new Dictionary<float, ParticleSystem>();
+        thrusters.Add(-1f, exhaustLeft);
+        thrusters.Add(1f, exhaustRight);
     }
 
     private void Thrust(float direction)
@@ -51,7 +59,7 @@ public class SpaceshipBehavior : MonoBehaviour
         {
             Vector2 force = (transform.up * THRUSTER_FORCE);
             rb.AddForce(force);
-            rb.AddTorque(direction);
+            rb.AddTorque(direction * 0.5f);
             thrusters[direction].Emit(1);
         }
     }
