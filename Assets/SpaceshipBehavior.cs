@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpaceshipBehavior : MonoBehaviour
 {
-    [SerializeField] private int THRUSTER_FORCE = 100;
+    [SerializeField] private int THRUSTER_FORCE = 80;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private ParticleSystem exhaustRight;
     [SerializeField] private ParticleSystem exhaustLeft;
@@ -42,7 +42,14 @@ public class SpaceshipBehavior : MonoBehaviour
                 }
             }
         #else
-            Thrust(Input.GetAxisRaw("Horizontal") * -1);
+            if (Input.GetKey(KeyCode.D))
+            {
+                Thrust(-1f);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                Thrust(1f);
+            }
         #endif
     }
 
