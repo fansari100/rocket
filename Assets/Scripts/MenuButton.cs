@@ -5,38 +5,36 @@ using UnityEngine.EventSystems;
 
 public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    // Start is called before the first frame update
-    private RectTransform rt;
-    [SerializeField] private AudioSource audioSource;
-    void Start()
+    public const float SHRINK_SCALE = 0.9f;
+    public const float GROW_SCALE = 1.0F;
+    [SerializeField] private RectTransform rt;
+    [SerializeField] private AudioController audioController;
+    [SerializeField] protected GameObject menuScreen;
+
+    protected void Start()
     {
-        rt = GetComponent<RectTransform>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         
     }
 
     public void OnPointerDown(PointerEventData data)
     {
-        audioSource.Play();
-        Shrink();
+        SetScale(SHRINK_SCALE);
+        audioController.playClickSound();
     }
 
     public void OnPointerUp(PointerEventData data)
     {
-        Grow();
+        SetScale(GROW_SCALE);
     }
 
-    private void Shrink()
+    private void SetScale(float scale)
     {
-        rt.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-    }
-
-    private void Grow()
-    {
-        rt.localScale = new Vector3(1f, 1f, 1f);
+        rt.localScale = new Vector3(scale, scale, scale);
     }
 }
