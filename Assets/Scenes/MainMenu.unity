@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377ec90eed0f645ada8e565ce2e827a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starField: {fileID: 0}
+  starField: {fileID: 1189936874}
 --- !u!199 &1189936873
 ParticleSystemRenderer:
   serializedVersion: 6

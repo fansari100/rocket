@@ -9,7 +9,7 @@ public class StarField : MonoBehaviour
     private const float STAR_SIZE = 0.3f;
     private const float STAR_SCALE = 0.3f;
     private const float STAR_SPEED = 0.25f;
-    private readonly Color STAR_COLOR = Color.white;
+    private static readonly Color STAR_COLOR = Color.white;
 
     [SerializeField] private ParticleSystem starField;
     private ParticleSystem.Particle[] stars;
