@@ -6,23 +6,23 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private const float SHRINK_SCALE = 0.9f;
-    private const float GROW_SCALE = 1.0F;
+    private const float ShrinkScale = 0.9f;
+    private const float GrowScale = 1.0F;
 
-    [SerializeField] private RectTransform rt;
-    [SerializeField] private AudioController audioController;
-    [SerializeField] private protected GameObject menuScreen;
-    [SerializeField] private AudioClip clickEffect;
+    [SerializeField] private RectTransform _rt;
+    [SerializeField] private AudioController _audioController;
+    [SerializeField] private protected GameObject _menuScreen;
+    [SerializeField] private AudioClip _clickEffect;
 
     public void OnPointerDown(PointerEventData data)
     {
-        SetScale(SHRINK_SCALE);
-        audioController.PlayEffect(clickEffect);
+        SetScale(ShrinkScale);
+        _audioController.PlayEffect(_clickEffect);
     }
 
     public void OnPointerUp(PointerEventData data)
     {
-        SetScale(GROW_SCALE);
+        SetScale(GrowScale);
     }
 
     /// <summary>
@@ -31,6 +31,6 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /// <param name="scale">The float value to set the localScale to.</param>
     private void SetScale(float scale)
     {
-        rt.localScale = new Vector3(scale, scale, scale);
+        _rt.localScale = new Vector3(scale, scale, scale);
     }
 }

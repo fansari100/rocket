@@ -5,12 +5,12 @@
 /// </summary>
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource effectSource;
+    [SerializeField] private AudioSource _musicSource;
+    [SerializeField] private AudioSource _effectSource;
 
     void Start()
     {
-        musicSource.Play();
+        _musicSource.Play();
     }
 
     /// <summary>
@@ -19,6 +19,6 @@ public class AudioController : MonoBehaviour
     /// <param name="effect">The effect to play.</param>
     public void PlayEffect(AudioClip effect)
     {
-        effectSource.PlayOneShot(effect);
+        _effectSource.PlayOneShot(effect);
     }
 }

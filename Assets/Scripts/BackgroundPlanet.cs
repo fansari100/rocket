@@ -6,8 +6,8 @@ public class BackgroundPlanet : MonoBehaviour
     private const float PlanetSpeed = 0.5f;
     private const float HalfSpriteSize = 256f;
 
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private SpriteAtlas spriteAtlas;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteAtlas _spriteAtlas;
 
     private Sprite[] _sprites;
     private int _currentSprite;
@@ -18,8 +18,8 @@ public class BackgroundPlanet : MonoBehaviour
     void Start()
     {
         _currentSprite = -1;
-        _sprites = new Sprite[spriteAtlas.spriteCount];
-        spriteAtlas.GetSprites(_sprites);
+        _sprites = new Sprite[_spriteAtlas.spriteCount];
+        _spriteAtlas.GetSprites(_sprites);
         ConfigurePlanet();
     }
 
@@ -34,10 +34,10 @@ public class BackgroundPlanet : MonoBehaviour
     private void ConfigurePlanet()
     {
         _currentSprite = GetRandomSprite();
-        spriteRenderer.sprite = _sprites[_currentSprite];
+        _spriteRenderer.sprite = _sprites[_currentSprite];
         _direction = GetRandomDirection();
-        _spriteWidthOffset = spriteRenderer.sprite.rect.width / HalfSpriteSize;
-        _spriteHeightOffset = spriteRenderer.sprite.rect.height / HalfSpriteSize;
+        _spriteWidthOffset = _spriteRenderer.sprite.rect.width / HalfSpriteSize;
+        _spriteHeightOffset = _spriteRenderer.sprite.rect.height / HalfSpriteSize;
         transform.position = GetRandomPosition();
     }
 

@@ -3,26 +3,26 @@
 /// <summary>
 /// Controller for the scrolling star background.
 /// </summary>
-public class StarField : MonoBehaviour
+public class _StarField : MonoBehaviour
 {
-    private const int MAX_STARS = 25;
-    private const float STAR_SIZE = 0.3f;
-    private const float STAR_SCALE = 0.3f;
-    private const float STAR_SPEED = 0.25f;
-    private static readonly Color STAR_COLOR = Color.white;
+    private const int MaxStars = 25;
+    private const float StarSize = 0.3f;
+    private const float StarScale = 0.3f;
+    private const float StarSpeed = 0.25f;
+    private static readonly Color StarColor = Color.white;
 
-    [SerializeField] private ParticleSystem starField;
-    private ParticleSystem.Particle[] stars;
+    [SerializeField] private ParticleSystem _starField;
+    private ParticleSystem.Particle[] _stars;
 
     void Start()
     {
-        stars = new ParticleSystem.Particle[MAX_STARS];
+        _stars = new ParticleSystem.Particle[MaxStars];
         CreateStars();
     }
 
     void Update()
     {
-        MoveStars(-STAR_SPEED);
+        MoveStars(-StarSpeed);
     }
 
     /// <summary>
@@ -30,13 +30,13 @@ public class StarField : MonoBehaviour
     /// </summary>
     private void CreateStars()
     {
-        for (int i = 0; i < stars.Length; i++)
+        for (int i = 0; i < _stars.Length; i++)
         {
-           stars[i].position = GetRandomPosition();
-           stars[i].startSize = GetRandomSize(STAR_SIZE);
-           stars[i].startColor = STAR_COLOR;
+           _stars[i].position = GetRandomPosition();
+           _stars[i].startSize = GetRandomSize(StarSize);
+           _stars[i].startColor = StarColor;
         }
-        starField.SetParticles(stars, stars.Length);
+        _starField.SetParticles(_stars, _stars.Length);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class StarField : MonoBehaviour
     /// <returns>The scaled size of the base star size.</returns>
     private float GetRandomSize(float size)
     {
-        return size * Random.Range(STAR_SCALE, 1f - STAR_SCALE);
+        return size * Random.Range(StarScale, 1f - StarScale);
     }
 
     /// <summary>
@@ -66,17 +66,17 @@ public class StarField : MonoBehaviour
     /// <param name="speed">The speed of each star.</param>
     public void MoveStars(float speed)
     {
-        for (int i = 0; i < stars.Length; i++)
+        for (int i = 0; i < _stars.Length; i++)
         {
-            stars[i].position += new Vector3(0f, speed * Time.deltaTime, 0f);
+            _stars[i].position += new Vector3(0f, speed * Time.deltaTime, 0f);
             // Recycle stars back to the top of the screen
-            if (IsOutOfBounds(stars[i].position))
+            if (IsOutOfBounds(_stars[i].position))
             {
                 Vector3 position = GetRandomPosition();
-                stars[i].position = new Vector3(position.x, CameraController.ScreenBounds.y, position.z);
+                _stars[i].position = new Vector3(position.x, CameraController.ScreenBounds.y, position.z);
             }
         }
-        starField.SetParticles(stars);
+        _starField.SetParticles(_stars);
     }
 
     /// <summary>
