@@ -10,9 +10,14 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private const float GrowScale = 1.0F;
 
     [SerializeField] private RectTransform _rt;
-    [SerializeField] private AudioController _audioController;
-    [SerializeField] private protected GameObject _menuScreen;
     [SerializeField] private AudioClip _clickEffect;
+    
+    private static AudioController _audioController;
+
+    void Start()
+    {
+        InitializeAudioController();
+    }
 
     public void OnPointerDown(PointerEventData data)
     {
@@ -32,5 +37,16 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void SetScale(float scale)
     {
         _rt.localScale = new Vector3(scale, scale, scale);
+    }
+
+    /// <summary>
+    /// Sets the _audioController field with the current AudioController in the scene.
+    /// </summary>
+    private void InitializeAudioController()
+    {
+        if (_audioController == null)
+        {
+            _audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+        }
     }
 }

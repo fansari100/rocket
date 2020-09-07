@@ -3,7 +3,7 @@
 /// <summary>
 /// Controller for the scrolling star background.
 /// </summary>
-public class _StarField : MonoBehaviour
+public class StarField : MonoBehaviour
 {
     private const int MaxStars = 25;
     private const float StarSize = 0.3f;
