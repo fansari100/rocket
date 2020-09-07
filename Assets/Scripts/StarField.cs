@@ -13,15 +13,11 @@ public class StarField : MonoBehaviour
 
     [SerializeField] private ParticleSystem starField;
     private ParticleSystem.Particle[] stars;
-    private Vector3 screenBounds;
-    
+
     void Start()
     {
         stars = new ParticleSystem.Particle[MAX_STARS];
-        screenBounds = GetScreenBounds();
-
         CreateStars();
-        starField.SetParticles(stars, stars.Length);
     }
 
     void Update()
@@ -40,15 +36,7 @@ public class StarField : MonoBehaviour
            stars[i].startSize = GetRandomSize(STAR_SIZE);
            stars[i].startColor = STAR_COLOR;
         }
-    }
-
-    /// <summary>
-    /// Gets the screen's bounds.
-    /// </summary>
-    /// <returns>The position of the top right of the screen, with the screen centered at (0,0).</returns>
-    private Vector3 GetScreenBounds()
-    {
-        return Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        starField.SetParticles(stars, stars.Length);
     }
 
     /// <summary>
@@ -57,9 +45,9 @@ public class StarField : MonoBehaviour
     /// <returns>A random position within the screen's bounds.</returns>
     private Vector3 GetRandomPosition()
     {
-        float x = Random.Range(-screenBounds.x, screenBounds.x);
-        float y = Random.Range(-screenBounds.y, screenBounds.y);
-        return new Vector3(x, y, -1f);
+        float x = Random.Range(-CameraController.ScreenBounds.x, CameraController.ScreenBounds.x);
+        float y = Random.Range(-CameraController.ScreenBounds.y, CameraController.ScreenBounds.y);
+        return new Vector3(x, y, transform.position.z);
     }
 
     /// <summary>
@@ -76,7 +64,7 @@ public class StarField : MonoBehaviour
     /// Moves every star in the star field based on their speed.
     /// </summary>
     /// <param name="speed">The speed of each star.</param>
-    private void MoveStars(float speed)
+    public void MoveStars(float speed)
     {
         for (int i = 0; i < stars.Length; i++)
         {
@@ -85,19 +73,19 @@ public class StarField : MonoBehaviour
             if (IsOutOfBounds(stars[i].position))
             {
                 Vector3 position = GetRandomPosition();
-                stars[i].position = new Vector3(position.x, screenBounds.y, position.z);
+                stars[i].position = new Vector3(position.x, CameraController.ScreenBounds.y, position.z);
             }
         }
         starField.SetParticles(stars);
     }
 
     /// <summary>
-    /// Checks if a star position is out of the screen's lower bound.
+    /// Checks if a background object's position is out of the screen's lower bound.
     /// </summary>
-    /// <param name="position">The star's position.</param>
+    /// <param name="position">The object's position.</param>
     /// <returns>True if out of bounds. False if not out of bounds.</returns>
     private bool IsOutOfBounds(Vector3 position)
     {
-        return position.y < -screenBounds.y;
+        return position.y < -CameraController.ScreenBounds.y;
     }
 }
