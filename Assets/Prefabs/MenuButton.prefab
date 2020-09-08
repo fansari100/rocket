@@ -119,7 +119,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3793016134912172777}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6867051662882421977, guid: fbdf1524727c444a2b0e0299d5314ff2,
+          type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &563905138196934965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +146,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rt: {fileID: 3793016134912172779}
-  _audioController: {fileID: 3595692662537335758, guid: fb817b682d9d546b18cd7a8f0473a9e9,
-    type: 3}
   _clickEffect: {fileID: 8300000, guid: 470bc4871864c4b758f3abbe4b04f44d, type: 3}
