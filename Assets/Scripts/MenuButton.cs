@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Base class for UI menu buttons.
@@ -12,18 +11,11 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [SerializeField] private RectTransform _rt;
     [SerializeField] private AudioClip _clickEffect;
-    
-    private static AudioController _audioController;
-
-    void Start()
-    {
-        InitializeAudioController();
-    }
 
     public void OnPointerDown(PointerEventData data)
     {
         SetScale(ShrinkScale);
-        _audioController.PlayEffect(_clickEffect);
+        AudioController.PlayEffect(_clickEffect);
     }
 
     public void OnPointerUp(PointerEventData data)
@@ -38,16 +30,5 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void SetScale(float scale)
     {
         _rt.localScale = new Vector3(scale, scale, scale);
-    }
-
-    /// <summary>
-    /// Sets the _audioController field with the current AudioController in the scene.
-    /// </summary>
-    private void InitializeAudioController()
-    {
-        if (_audioController == null)
-        {
-            _audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
-        }
     }
 }
