@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,8 +17,18 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private AudioClip _clickEffect;
     [SerializeField] private Image _image;
     [SerializeField] private bool _isToggle;
+    [SerializeField] private string _playerPref;
 
-    private bool _isEnabled = true;
+    private bool _isEnabled;
+
+    /// <summary>
+    /// Configures the enabled state based on PlayerPrefs.
+    /// </summary>
+    void Awake()
+    {
+        _isEnabled = IsEnabled(_playerPref);
+        _image.color = _isEnabled ? OnColor : OffColor;
+    }
 
     /// <summary>
     /// Plays the button effect and shrink's the button's size.
@@ -38,8 +49,8 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         SetScale(GrowScale);
         if (_isToggle)
         {
-            _image.color = _image.color == OnColor ? OffColor : OnColor;
             _isEnabled = !_isEnabled;
+            _image.color = _isEnabled ? OnColor : OffColor;
         }
     }
 
@@ -50,5 +61,15 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void SetScale(float scale)
     {
         _rt.localScale = new Vector3(scale, scale, scale);
+    }
+
+    /// <summary>
+    /// Checks whether the button is enabled based on PlayerPrefs.
+    /// </summary>
+    /// <param name="playerPref">The preference that determines the button's enabled state.</param>
+    /// <returns>True if enabled. False if not enabled.</returns>
+    private bool IsEnabled(string playerPref)
+    {
+        return Convert.ToBoolean(PlayerPrefs.GetInt(playerPref, 1));
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class AudioController : MonoBehaviour
         _audioSources = new Dictionary<string, AudioSource>();
         _audioSources.Add("music", transform.Find("MusicSource").GetComponent<AudioSource>());
         _audioSources.Add("effect", transform.Find("EffectSource").GetComponent<AudioSource>());
+        ConfigureSettings();
     }
 
     /// <summary>
@@ -44,8 +46,7 @@ public class AudioController : MonoBehaviour
     /// <param name="audioSourceName">The name of the AudioSource (either "music" or "effect").</param>
     public static void ToggleMute(string audioSourceName)
     {
-        AudioSource audioSource = _audioSources[audioSourceName];
-        _instance.StartCoroutine(ToggleMuteAfterEffectPlays(audioSource));
+        _instance.StartCoroutine(ToggleMuteAfterEffectPlays(audioSourceName));
     }
 
     /// <summary>
@@ -56,6 +57,9 @@ public class AudioController : MonoBehaviour
     public static void SetVolume(string audioSourceName, float volume)
     {
         _audioSources[audioSourceName].volume = volume;
+
+        PlayerPrefs.SetFloat(audioSourceName + "Volume", volume);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
@@ -63,9 +67,25 @@ public class AudioController : MonoBehaviour
     /// </summary>
     /// <param name="audioSource">The AudioSource to toggle.</param>
     /// <returns>WaitForSeconds the length of the button effect AudioClip.</returns>
-    private static IEnumerator ToggleMuteAfterEffectPlays(AudioSource audioSource)
+    private static IEnumerator ToggleMuteAfterEffectPlays(string audioSourceName)
     {
         yield return new WaitForSeconds(_audioSources["effect"].clip.length);
+        
+        AudioSource audioSource = _audioSources[audioSourceName];
         audioSource.mute = !audioSource.mute;
+        
+        PlayerPrefs.SetInt(audioSourceName + "Mute", Convert.ToInt32(!audioSource.mute));
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Configures the mute and volume settings of the AudioSources based on PlayerPrefs.
+    /// </summary>
+    private static void ConfigureSettings()
+    {
+        _audioSources["music"].mute = !Convert.ToBoolean(PlayerPrefs.GetInt("musicMute", 1));
+        _audioSources["music"].volume = PlayerPrefs.GetFloat("musicVolume", 1f);
+        _audioSources["effect"].mute = !Convert.ToBoolean(PlayerPrefs.GetInt("effectMute", 1));
+        _audioSources["effect"].volume = PlayerPrefs.GetFloat("effectVolume", 1f);
     }
 }
