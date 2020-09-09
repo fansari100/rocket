@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// </summary>
 public class VolumeSlider : MonoBehaviour
 {
-    [SerializeField] private string audioSourceName;
+    [SerializeField] private string _audioSourceName;
     [SerializeField] private Slider _slider;
     
     /// <summary>
@@ -23,6 +23,6 @@ public class VolumeSlider : MonoBehaviour
     /// <param name="volume">The volume level of the Slider.</param>
     private void SetVolume(float volume)
     {
-        AudioController.SetVolume(audioSourceName, volume);
+        AudioController.SetVolume(_audioSourceName, volume);
     }
 }

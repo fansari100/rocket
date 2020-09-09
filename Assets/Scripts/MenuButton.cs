@@ -15,9 +15,9 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private RectTransform _rt;
     [SerializeField] private AudioClip _clickEffect;
     [SerializeField] private Image _image;
-    [SerializeField] private bool isToggle;
+    [SerializeField] private bool _isToggle;
 
-    private bool isEnabled = true;
+    private bool _isEnabled = true;
 
     /// <summary>
     /// Plays the button effect and shrink's the button's size.
@@ -36,10 +36,10 @@ public class MenuButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData data)
     {
         SetScale(GrowScale);
-        if (isToggle)
+        if (_isToggle)
         {
             _image.color = _image.color == OnColor ? OffColor : OnColor;
-            isEnabled = !isEnabled;
+            _isEnabled = !_isEnabled;
         }
     }
 

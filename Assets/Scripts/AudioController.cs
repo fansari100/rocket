@@ -8,14 +8,14 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
     private static Dictionary<string, AudioSource> _audioSources;
-    private static AudioController instance;
+    private static AudioController _instance;
 
     /// <summary>
     /// Configures the music and effect AudioSource in the AudioController's children.
     /// </summary>
     void Awake()
     {
-        instance = this;
+        _instance = this;
         _audioSources = new Dictionary<string, AudioSource>();
         _audioSources.Add("music", transform.Find("MusicSource").GetComponent<AudioSource>());
         _audioSources.Add("effect", transform.Find("EffectSource").GetComponent<AudioSource>());
@@ -45,7 +45,7 @@ public class AudioController : MonoBehaviour
     public static void ToggleMute(string audioSourceName)
     {
         AudioSource audioSource = _audioSources[audioSourceName];
-        instance.StartCoroutine(ToggleMuteAfterEffectPlays(audioSource));
+        _instance.StartCoroutine(ToggleMuteAfterEffectPlays(audioSource));
     }
 
     /// <summary>
