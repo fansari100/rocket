@@ -134,3 +134,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rt: {fileID: 3793016134912172779}
   _clickEffect: {fileID: 8300000, guid: 470bc4871864c4b758f3abbe4b04f44d, type: 3}
+  _image: {fileID: 3793016134912172777}
+  isToggle: 0

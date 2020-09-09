@@ -9,6 +9,9 @@ public class VolumeSlider : MonoBehaviour
     [SerializeField] private string audioSourceName;
     [SerializeField] private Slider _slider;
     
+    /// <summary>
+    /// Configures the event listener for the slider's value change.
+    /// </summary>
     void Start()
     {
         _slider.onValueChanged.AddListener(SetVolume);

@@ -10,6 +10,9 @@ public class AudioController : MonoBehaviour
     private static Dictionary<string, AudioSource> _audioSources;
     private static AudioController instance;
 
+    /// <summary>
+    /// Configures the music and effect AudioSource in the AudioController's children.
+    /// </summary>
     void Awake()
     {
         instance = this;
@@ -18,6 +21,9 @@ public class AudioController : MonoBehaviour
         _audioSources.Add("effect", transform.Find("EffectSource").GetComponent<AudioSource>());
     }
 
+    /// <summary>
+    /// Plays the title music.
+    /// </summary>
     void Start()
     {
         _audioSources["music"].Play();
