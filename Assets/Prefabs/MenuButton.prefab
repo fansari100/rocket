@@ -133,6 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rt: {fileID: 3793016134912172779}
-  _audioController: {fileID: 3595692662537335758, guid: fb817b682d9d546b18cd7a8f0473a9e9,
-    type: 3}
   _clickEffect: {fileID: 8300000, guid: 470bc4871864c4b758f3abbe4b04f44d, type: 3}
+  _image: {fileID: 3793016134912172777}
+  isToggle: 0
