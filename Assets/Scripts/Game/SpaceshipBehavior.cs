@@ -7,7 +7,7 @@ public class SpaceshipBehavior : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private ParticleSystem exhaustRight;
     [SerializeField] private ParticleSystem exhaustLeft;
-    private Dictionary<float, ParticleSystem> thrusters;
+    private Dictionary<float, ParticleSystem> rockets;
     private int HALF_WIDTH = Screen.width / 2;
     /*
     Vector2 objectPos;
@@ -16,7 +16,7 @@ public class SpaceshipBehavior : MonoBehaviour
     */
     void Start()
     {
-        LoadThrusters();
+        LoadRockets();
     }
     void Update()
     {
@@ -53,11 +53,11 @@ public class SpaceshipBehavior : MonoBehaviour
         #endif
     }
 
-    private void LoadThrusters()
+    private void LoadRockets()
     {
-        thrusters = new Dictionary<float, ParticleSystem>();
-        thrusters.Add(-1f, exhaustLeft);
-        thrusters.Add(1f, exhaustRight);
+        rockets = new Dictionary<float, ParticleSystem>();
+        rockets.Add(-1f, exhaustLeft);
+        rockets.Add(1f, exhaustRight);
     }
 
     private void Thrust(float direction)
@@ -67,7 +67,7 @@ public class SpaceshipBehavior : MonoBehaviour
             Vector2 force = (transform.up * THRUSTER_FORCE);
             rb.AddForce(force);
             rb.AddTorque(direction * 0.5f);
-            thrusters[direction].Emit(1);
+            rockets[direction].Emit(1);
         }
     }
 }
